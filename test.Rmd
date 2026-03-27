@@ -1,0 +1,89 @@
+---
+output:
+  html_document:
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# **2026 Internal Draft Integrated Report database access**
+
+DEQ recommends using the current version of Google Chrome or Mozilla Firefox for this application.
+
+**These assessment conclusions are for internal data review**
+
+### **Database Access:**
+
+This application offers two ways to access and download the numeric data used in 2026 Integrated Report assessments:
+
+1.  Click on **Raw Data Download** in the header at the top of this page to access raw data used in the 2026 assessments.
+
+2.  Filter the database based on the search criteria in the fields on the left of this page. Press the filter button to view the results in the **Assessments** tab
+
+### **Notes on interpreting records in the assessment tab:**
+
+-   The current assessment categorizations are described in the “final_AU_cat” report field.
+
+-   The “year_last_assessed” report field indicates the most recent IR cycle the waterbody was assessed. If 2026 is not the year in this field, it means there were no new data and the categories were carried forward from a previous reporting cycle
+
+-   Assessment categorized as Category 4 or Category 5 (including all subcategories) are considered impaired.
+
+-   Watershed Units can have additional information on individual streams within each unit (as defined by the NHD GNIS Name), and can be expanded to show the GNIS waterbody information. Click on the black triangle to the left of the AU_ID in the assessment tab to see individual waterbody information.
+
+### **Assessment database metadata:**
+
+-   **AU_ID** - Assessment Unit ID
+
+-   **AU_Name** - Assessment Unit Name
+
+-   **OWRD_Basin** - Oregon Water Resources Department Administrative Basin
+
+-   **Assessment** - Parameter being assessed. Includes specific standard, if applicable
+
+-   **final_AU_cat** - Current Integrated Report category for that specific assessment
+
+    -   **Category 2** - Available data and information indicate that some designated uses are supported and the water quality standard is attained
+
+    -   **Category 3** - Insufficient data to determine whether a designated use is supported
+
+        -   **Category 3B** - This category is used when there is insufficient data to determine use support, but some data indicate possible impairment
+
+        -   **Category 3C** - This category is used to identify waters whose biocriteria scores differ from reference condition, but are not classified as impaired
+
+        -   **Category 3D** - This category is used when all the available data has criteria values below the test method’s quantification limits
+
+    -   **Category 4** - Data indicate that at least one designated use is not supported, but a TMDL is not needed to address the pollutant
+
+        -   **Category 4A** - Clean-up plans (also called TMDLs) that will result in the waterbody meeting water quality standards and supporting its beneficial uses have been approved
+
+        -   **Category 4B** - Other pollution control requirements are expected to address pollutant of concern and will result in attainment of water quality standards
+
+        -   **Category 4C** - The impairment is caused by pollution, not a pollutant. For example, flow, or lack of flow, are not considered pollutants, but may be affecting the waterbody’s beneficial uses
+
+    -   **Category 5** - Data indicate a designated use is not supported or a water quality standard is not attained and a TMDL is needed. This category constitutes the Section 303(d) list that EPA will approve or disapprove under the Clean Water Act
+
+        -   **Category 5C** - Data indicate a designated use is not supported or a water quality standard is not attained primarily due to global climate change
+
+-   **Rationale** - Rationale for parameter assessment conclusion, if any
+
+-   **Stations** - Monitoring stations used in 2022 assessment. Data from these monitoring locations can be downloaded from AWQMS, providing the raw data used in assessment.
+
+-   **status_change** - Identifies the differece between this cycle and 2022 cycle
+
+-   **Year_listed** - If Assessment Unit is identified as impaired (Category 4 or 5), year it first appeared on the 303(d) List
+
+-   **year_last_assessed** - Identifies the IR cycle of last assessment
+
+-   **prev_category** - Identifies the previous cycle IR category
+
+-   **prev_rationale** - Identifies the previous cycle IR category rationale
+
+-   **TMDLs** - Identifies any applicable TMDL
+
+-   **action_ids** - Identifies any applicable TMDL Action IDs
+
+-   **TMDL_pollutants** - Identifies any applicable pollutants covered by a TMDL
+
+-   **TMDL_Periods** - Identifies any applicable time if year covered by a TMDL

@@ -1,0 +1,15 @@
+/*------------- Whole Document---------------- */
+body {
+   font-family: Arial, sans-serif;
+   font-size: 16px;
+   margin: 0;
+   padding: 0; /* Also useful to remove any default padding */
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
