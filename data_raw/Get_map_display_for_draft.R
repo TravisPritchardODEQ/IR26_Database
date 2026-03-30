@@ -81,4 +81,4 @@ table_list <- list('map_display' = map_display,
                    'map_display_GNIS' = map_display_GNIS)
 
 
-write.xlsx(table_list, "interna;_review_map_display.xlsx")
+write.xlsx(table_list, "internal_review_map_display.xlsx")
