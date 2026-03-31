@@ -107,7 +107,7 @@ ui <- navbarPage("2026 Draft Integrated Report",
                                                     "Select HUC 10",
                                                     choices =huc10_name,
                                                     multiple = TRUE),
-                                     checkboxInput("permitcheckbox", "Only view assessments that include permittee data.", FALSE), 
+                                     #checkboxInput("permitcheckbox", "Only view assessments that include permittee data.", FALSE), 
                                    ),
                                    
                                    # Show a plot of the generated distribution
@@ -186,7 +186,7 @@ ui <- navbarPage("2026 Draft Integrated Report",
                                                  ),
                                                  tabPanel("Assessments",
                                                           value = "Datatab",
-                                                          #downloadButton('downloadassessmentData', label = "Download Assessment Results"),
+                                                          downloadButton('downloadassessmentData', label = "Download Assessment Results"),
                                                           
                                                           # Assessment download button --------------------------------------------------------------------------------------
                                                           
@@ -718,13 +718,13 @@ server <- function(input, output, session) {
   
   
   output$downloadData <- downloadHandler(
-    filename = '2022_IR_select_data_download.zip',
+    filename = '2026_IR_select_data_download.zip',
     content = function(fname) {
       
       con <- dbConnect(duckdb(), dbdir = 'data/decisions.duckdb')
       
       
-      AquaticTrash_data <- tbl(con, 'AquaticTrash_data') |>
+      turbidity_data <- tbl(con, 'turbidity_data') |>
         filter(AU_ID %in% !!filtered_data()) |>
         collect()
       
@@ -761,17 +761,17 @@ server <- function(input, output, session) {
         filter(AU_ID %in% !!filtered_data()) |>
         collect()
       
-      MarineDO_Background_data <- tbl(con, 'MarineDO_Background_data') |>
-        collect()
-      
-      MarineDO_benchmark_data <- tbl(con, 'MarineDO_benchmark_data') |>
-        filter(AU_ID %in% !!filtered_data()) |>
-        collect()
-      
-      OceanAcidification_data <- tbl(con, 'OceanAcidification_data') |>
-        filter(AU_ID %in% !!filtered_data()) |>
-        collect()
-      
+      # MarineDO_Background_data <- tbl(con, 'MarineDO_Background_data') |>
+      #   collect()
+      # 
+      # MarineDO_benchmark_data <- tbl(con, 'MarineDO_benchmark_data') |>
+      #   filter(AU_ID %in% !!filtered_data()) |>
+      #   collect()
+      # 
+      # OceanAcidification_data <- tbl(con, 'OceanAcidification_data') |>
+      #   filter(AU_ID %in% !!filtered_data()) |>
+      #   collect()
+      # 
       RecreationsHabs_data <- tbl(con, 'RecreationsHabs_data') |>
         filter(AU_ID %in% !!filtered_data()) |>
         collect()
@@ -784,9 +784,9 @@ server <- function(input, output, session) {
         filter(AU_ID %in% !!filtered_data()) |>
         collect()
       
-      bact_coast_Coast_Contact_WS_Data <- tbl(con, 'bact_coast_Coast_Contact_WS_Data') |>
-        filter(AU_ID %in% !!filtered_data()) |>
-        collect()
+      # bact_coast_Coast_Contact_WS_Data <- tbl(con, 'bact_coast_Coast_Contact_WS_Data') |>
+      #   filter(AU_ID %in% !!filtered_data()) |>
+      #   collect()
       bact_coast_Coast_Contact_other_Data <- tbl(con, 'bact_coast_Coast_Contact_other_Data') |>
         filter(AU_ID %in% !!filtered_data()) |>
         collect()
@@ -844,6 +844,10 @@ server <- function(input, output, session) {
         filter(AU_ID %in% !!filtered_data()) |>
         collect()
       
+      turbidity_data <- tbl(con, 'turbidity_data') |>
+        filter(AU_ID %in% !!filtered_data()) |>
+        collect()
+      
       
       
       
@@ -868,9 +872,10 @@ server <- function(input, output, session) {
               "Human Health Toxics.xlsx" ,
               "Biocriteria.xlsx",
               "Recreational HABS.xlsx",
-              "Ocean Acidification.xlsx",
-              "Marine Dissolved Oxygen.xlsx",
-              "Aquatic Trash.xlsx"        )
+              #"Ocean Acidification.xlsx",
+              #"Marine Dissolved Oxygen.xlsx",
+              #"Aquatic Trash.xlsx" ,
+              "Turbidity.xlsx"       )
       
       
       
@@ -911,14 +916,14 @@ server <- function(input, output, session) {
       
       RecreationsHabs_workbook <- list('RecreationsHabs_data' =RecreationsHabs_data)
       
-      OceanAcidification_data_workbook <- list('OceanAcidification_data' =OceanAcidification_data)
+      #OceanAcidification_data_workbook <- list('OceanAcidification_data' =OceanAcidification_data)
       
-      marine_DO_workbook <- list('MarineDO_benchmark_data' =MarineDO_benchmark_data,
-                                 'MarineDO_Background_data' =MarineDO_Background_data)
-      
-      AquaticTrash_data_workbook <- list('AquaticTrash_data' = AquaticTrash_data)
-      
-      
+      # marine_DO_workbook <- list('MarineDO_benchmark_data' =MarineDO_benchmark_data,
+      #                            'MarineDO_Background_data' =MarineDO_Background_data)
+      # 
+      # AquaticTrash_data_workbook <- list('AquaticTrash_data' = AquaticTrash_data)
+      # 
+      turbidity_workbook <- list('turbidity_data' = turbidity_data)
       
       write.xlsx(bacteria_workbooks, file =               "Bacteria.xlsx"               , overwrite = TRUE   )
       write.xlsx(chl_workbook, file =                     "chl-a.xlsx"                  , overwrite = TRUE   )
@@ -929,9 +934,10 @@ server <- function(input, output, session) {
       write.xlsx(toxhh_workbook, file =                   "Human Health Toxics.xlsx"    , overwrite = TRUE   )
       write.xlsx(biocriteria_workbook, file=              "Biocriteria.xlsx"            , overwrite = TRUE   )
       write.xlsx(RecreationsHabs_workbook, file =         "Recreational HABS.xlsx"      , overwrite = TRUE   )
-      write.xlsx(OceanAcidification_data_workbook, file = "Ocean Acidification.xlsx"    , overwrite = TRUE   )
-      write.xlsx(marine_DO_workbook, file =               "Marine Dissolved Oxygen.xlsx", overwrite = TRUE   )
-      write.xlsx(AquaticTrash_data_workbook, file =       "Aquatic Trash.xlsx"          , overwrite = TRUE   )
+      # write.xlsx(OceanAcidification_data_workbook, file = "Ocean Acidification.xlsx"    , overwrite = TRUE   )
+      # write.xlsx(marine_DO_workbook, file =               "Marine Dissolved Oxygen.xlsx", overwrite = TRUE   )
+      # write.xlsx(AquaticTrash_data_workbook, file =       "Aquatic Trash.xlsx"          , overwrite = TRUE   )
+      write.xlsx(turbidity_workbook, file =               "Turbidity.xlsx"               , overwrite = TRUE   )
       
       
       
@@ -947,11 +953,11 @@ server <- function(input, output, session) {
   
   output$downloadallData <-  downloadHandler(
     filename <- function() {
-      paste("2022_IR_all_data_download", "zip", sep=".")
+      paste("2026_IR_all_data_download", "zip", sep=".")
     },
     
     content <- function(file) {
-      file.copy("data/Oregon 2024 Internal Draft IR data.zip", file)
+      file.copy("data/Oregon 2026 Draft IR data.zip", file)
     },
     contentType = "application/zip"
   )

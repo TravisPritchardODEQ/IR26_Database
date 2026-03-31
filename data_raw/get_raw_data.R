@@ -142,7 +142,7 @@ HH_Tox_Data <- read.xlsx(paste0(filepath, tox_hh),
 
 
 biocriteria_data <- read.xlsx(paste0(filepath, biocriteria),
-                              sheet = 'Data')
+                              sheet = 'Biocriteria Raw Data')
 
 
 # HABS ------------------------------------------------------------------------------------------------------------
@@ -152,28 +152,36 @@ RecreationsHabs_data <- read.xlsx(paste0(filepath, non_R),
                                   sheet = 'RecreationsHabs_data')
 
 
+# Turbidity ---------------------------------------------------------------
+
+turbidity_data <- read.xlsx(paste0(filepath, turb),
+                           sheet = 'Turb Data')
+
+
 # Ocean Acidification ---------------------------------------------------------------------------------------------
 
-OceanAcidification_data <- read.xlsx(paste0(filepath, non_R),
-                                     sheet = 'OceanAcidification_data')
+# Not included in 2026
+# OceanAcidification_data <- read.xlsx(paste0(filepath, non_R),
+#                                      sheet = 'OceanAcidification_data')
 
 
 # Marine DO -------------------------------------------------------------------------------------------------------
-
-
-MarineDO_benchmark_data <- read.xlsx(paste0(filepath, non_R),
-                                     sheet = 'MarineDO_benchmark_data')
-
-MarineDO_Background_data <- read.xlsx(paste0(filepath, non_R),
-                                      sheet = 'MarineDO_Background_data')
+# 
+# Not included in 2026
+# 
+# MarineDO_benchmark_data <- read.xlsx(paste0(filepath, non_R),
+#                                      sheet = 'MarineDO_benchmark_data')
+# 
+# MarineDO_Background_data <- read.xlsx(paste0(filepath, non_R),
+#                                       sheet = 'MarineDO_Background_data')
 
 
 # Aquatic Trash ---------------------------------------------------------------------------------------------------
 
-
-
-AquaticTrash_data <- read.xlsx(paste0(filepath, non_R),
-                               sheet = 'AquaticTrash_data')
+#Not included in 2026
+# 
+# AquaticTrash_data <- read.xlsx(paste0(filepath, non_R),
+#                                sheet = 'AquaticTrash_data')
 
 
 
@@ -182,7 +190,7 @@ AquaticTrash_data <- read.xlsx(paste0(filepath, non_R),
 
 #Remove everything from environment that is not the target dataframes
 
-targets <- ls()
+targets <- ls()[sapply(ls(), function(x) is.data.frame(get(x)))]
 
 con <- dbConnect(duckdb(), dbdir = "data/decisions.duckdb")
 
@@ -208,7 +216,7 @@ dbDisconnect(con, shutdown = TRUE)
 
 ## workbooks -------------------------------------------------------------------------------------------------------
 bacteria_workbooks <- list('Coast_Contact_Raw_Data'       = bact_coast_Coast_Contact_Raw_Data       ,
-                           'Coast_Contact_WS_Data'        = bact_coast_Coast_Contact_WS_Data,
+                           #'Coast_Contact_WS_Data'        = bact_coast_Coast_Contact_WS_Data,
                            'Coast_Contact_other_Data'     = bact_coast_Coast_Contact_other_Data,
                            'Fresh_Bacteria_Data_WS'       = bact_fresh_Fresh_Bacteria_Data_WS       ,
                            'Fresh_Bacteria_Data_other'    = bact_fresh_Fresh_Bacteria_Data_other    ,
@@ -244,12 +252,14 @@ biocriteria_workbook <- list('biocriteria_data' = biocriteria_data)
 
 RecreationsHabs_workbook <- list('RecreationsHabs_data' = RecreationsHabs_data)
 
-OceanAcidification_data_workbook <- list('OceanAcidification_data' = OceanAcidification_data)
+turbidity_workbook <- list('Turbidity_data' = turbidity_data)
 
-marine_DO_workbook <- list('MarineDO_benchmark_data' = MarineDO_benchmark_data,
-                           'MarineDO_Background_data' = MarineDO_Background_data)
-
-AquaticTrash_data_workbook <- list('AquaticTrash_data' = AquaticTrash_data)
+# OceanAcidification_data_workbook <- list('OceanAcidification_data' = OceanAcidification_data)
+# 
+# marine_DO_workbook <- list('MarineDO_benchmark_data' = MarineDO_benchmark_data,
+#                            'MarineDO_Background_data' = MarineDO_Background_data)
+# 
+# AquaticTrash_data_workbook <- list('AquaticTrash_data' = AquaticTrash_data)
 
 
 
@@ -262,9 +272,10 @@ write.xlsx(toxal_workbook, file =                   "Aquatic Life Toxics.xlsx"  
 write.xlsx(toxhh_workbook, file =                   "Human Health Toxics.xlsx"       )
 write.xlsx(biocriteria_workbook, file=              "Biocriteria.xlsx"               )
 write.xlsx(RecreationsHabs_workbook, file =         "Recreational HABS.xlsx"         )
-write.xlsx(OceanAcidification_data_workbook, file = "Ocean Acidification.xlsx"       )
-write.xlsx(marine_DO_workbook, file =               "Marine Dissolved Oxygen.xlsx"   )
-write.xlsx(AquaticTrash_data_workbook, file =       "Aquatic Trash.xlsx"             )
+write.xlsx(turbidity_workbook, file =               "Turbidity.xlsx"                 )
+# write.xlsx(OceanAcidification_data_workbook, file = "Ocean Acidification.xlsx"       )
+# write.xlsx(marine_DO_workbook, file =               "Marine Dissolved Oxygen.xlsx"   )
+# write.xlsx(AquaticTrash_data_workbook, file =       "Aquatic Trash.xlsx"             )
 
 
 
