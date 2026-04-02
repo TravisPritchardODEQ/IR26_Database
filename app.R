@@ -359,11 +359,11 @@ server <- function(input, output, session) {
     
     t <-tbl(con, "AU_decisions")
     
-    if(input$permitcheckbox){
-      t <- t%>%
-        filter(permittee)
-
-    }
+    # if(input$permitcheckbox){
+    #   t <- t%>%
+    #     filter(permittee)
+    # 
+    # }
     
     if (!is.null(input$AUs)){
       
