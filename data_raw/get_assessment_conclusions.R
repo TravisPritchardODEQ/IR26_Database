@@ -351,11 +351,11 @@ Basins <- read.xlsx('data_raw/AU_2_Basin.xlsx') |>
 
 # Get conclusions from rollup ---------------------------------------------
 
-AU_decisions_import <- read.xlsx("C:/Users/tpritch/OneDrive - Oregon/DEQ - Integrated Report - IR_2026/Draft IR/internal_draft/IR_2026_Internal_review_Rollup-2026-01-21.xlsx",
+AU_decisions_import <- read.xlsx("C:/Users/tpritch/OneDrive - Oregon/DEQ - Integrated Report - IR_2026/Draft IR/Public_draft/IR_2026_Draft_Rollup-2026-03-30.xlsx",
                           sheet = 'AU_decisions')
 
 
-GNIS_decisions <- read.xlsx("C:/Users/tpritch/OneDrive - Oregon/DEQ - Integrated Report - IR_2026/Draft IR/internal_draft/IR_2026_Internal_review_Rollup-2026-01-21.xlsx",
+GNIS_decisions <-  read.xlsx("C:/Users/tpritch/OneDrive - Oregon/DEQ - Integrated Report - IR_2026/Draft IR/Public_draft/IR_2026_Draft_Rollup-2026-03-30.xlsx",
                           sheet = 'GNIS_decisions')
 
 
