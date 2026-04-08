@@ -17,6 +17,7 @@ library(shinyalert)
 library(bslib)
 
 load('data/nest_data.Rdata')
+load('data/ben_use_list.Rdata')
 source('functions/load_data.R')
 
 ui <- navbarPage("2026 Draft Integrated Report",
@@ -106,6 +107,10 @@ ui <- navbarPage("2026 Draft Integrated Report",
                                      selectizeInput("huc10_selector",
                                                     "Select HUC 10",
                                                     choices =huc10_name,
+                                                    multiple = TRUE),
+                                     selectizeInput("ben_use_selector",
+                                                    "Select Impacted Beneficial Uses",
+                                                    choices = ben_use_list,
                                                     multiple = TRUE),
                                      #checkboxInput("permitcheckbox", "Only view assessments that include permittee data.", FALSE), 
                                    ),
@@ -458,10 +463,7 @@ server <- function(input, output, session) {
         filter(OWRD_Basin %in% OWRD)
     }
     
-    
-    
-    
-    
+
     
     
     
@@ -473,7 +475,20 @@ server <- function(input, output, session) {
     
     dbDisconnect(con, shutdown=TRUE)
     
+    
+    #This sort of filtering doesn't work before we make the database call, so if
+    #we need it, we need to do after database call. 
+    if (!is.null(input$ben_use_selector)){
+      
+      ben_use <- input$ben_use_selector
+      
+      t <- t %>%
+        filter(str_detect(ben_uses, str_c(ben_use, collapse = "|")))
+      
+    }
+    
     t
+    
     
   })
   
